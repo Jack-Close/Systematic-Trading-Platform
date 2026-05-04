@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Research Platform — Complete Technical Documentation</title>
+<style>
+  /* ===== BASE RESET & FONTS ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.6;
+    color: #4a4a4a;
+    background: #fff;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* ===== PAGE WRAPPER ===== */
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 50px;
+  }
+
+  /* ===== COVER PAGE ===== */
+  .cover {
+    text-align: center;
+    padding: 80px 40px 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cover-title {
+    font-size: 42pt;
+    font-weight: 700;
+    color: #4fc3f7;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    line-height: 1.1;
+  }
+
+  .cover-subtitle {
+    font-size: 18pt;
+    color: #7ec8e3;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .cover-tagline {
+    font-size: 11pt;
+    color: #00ACC1;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  .cover hr {
+    border: none;
+    border-top: 2px solid #00ACC1;
+    width: 70%;
+    margin: 0 auto 30px;
+  }
+
+  .cover-description {
+    font-size: 10.5pt;
+    color: #4a4a4a;
+    max-width: 680px;
+    text-align: justify;
+    line-height: 1.7;
+  }
+
+  /* ===== HEADINGS ===== */
+  h1 {
+    font-size: 20pt;
+    color: #00ACC1;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #00ACC1;
+    text-decoration: none;
+  }
+
+  h1.section-title {
+    margin-top: 0;
+  }
+
+  h2 {
+    font-size: 13pt;
+    color: #00ACC1;
+    font-weight: 600;
+    margin-top: 28px;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    font-size: 11pt;
+    color: #E8912A;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 6px;
+  }
+
+  h4 {
+    font-size: 10.5pt;
+    color: #1a2744;
+    font-weight: 600;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+
+  /* ===== HORIZONTAL RULES ===== */
+  hr {
+    border: none;
+    border-top: 1px solid #d0dde8;
+    margin: 16px 0;
+  }
+
+  /* ===== PARAGRAPHS ===== */
+  p {
+    text-align: justify;
+    margin-bottom: 10px;
+    color: #4a4a4a;
+  }
+
+  /* ===== LISTS ===== */
+  ul, ol {
+    margin: 8px 0 10px 28px;
+    color: #4a4a4a;
+  }
+
+  ul { list-style-type: disc; }
+  ul ul { list-style-type: square; margin-top: 4px; }
+  li { margin-bottom: 4px; line-height: 1.6; }
+
+  /* ===== CODE BLOCKS ===== */
+  pre {
+    background: #1a1a2e;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    overflow-x: auto;
+    border: 1px solid #0d1117;
+  }
+
+  pre code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9pt;
+    color: #4fc3f7;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    white-space: pre;
+    line-height: 1.5;
+  }
+
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 9pt;
+    background: #1a1a2e;
+    color: #7ec8e3;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 9.5pt;
+  }
+
+  thead tr {
+    background: #1a2744;
+    color: #ffffff;
+  }
+
+  thead th {
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9.5pt;
+    border: 1px solid #0d1f3c;
+    color: #ffffff;
+  }
+
+  tbody tr {
+    background: #ffffff;
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f4f8fc;
+  }
+
+  tbody td {
+    padding: 7px 12px;
+    border: 1px solid #d0dde8;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tbody td code {
+    font-size: 8.5pt;
+  }
+
+  /* ===== TOC TABLE ===== */
+  .toc-table thead th { font-size: 10pt; padding: 9px 14px; }
+  .toc-table tbody td { font-size: 9.5pt; padding: 6px 14px; }
+  .toc-table tbody td:last-child { text-align: right; font-weight: 600; color: #00ACC1; }
+  .toc-indent { padding-left: 30px !important; font-style: italic; color: #666; }
+
+  /* ===== SECTION WRAPPER ===== */
+  .section {
+    margin-bottom: 20px;
+  }
+
+  /* ===== NOTES / CALLOUTS ===== */
+  .note {
+    background: #f0f8ff;
+    border-left: 3px solid #00ACC1;
+    padding: 8px 14px;
+    margin: 10px 0;
+    font-size: 9.5pt;
+    color: #3a5a6a;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .note strong { color: #00ACC1; }
+
+  /* ===== FOOTER ===== */
+  .doc-footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 2px solid #00ACC1;
+    text-align: center;
+    color: #7ec8e3;
+    font-size: 9pt;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== PRINT STYLES ===== */
+  @media print {
+    body {
+      font-size: 10pt;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .page {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .cover {
+      page-break-after: always;
+      min-height: 0;
+      height: 100vh;
+    }
+
+    .toc-section {
+      page-break-after: always;
+    }
+
+    h1 {
+      page-break-before: always;
+    }
+
+    h1.no-break {
+      page-break-before: avoid;
+    }
+
+    h2, h3 {
+      page-break-after: avoid;
+    }
+
+    pre, table {
+      page-break-inside: avoid;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    .note {
+      page-break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ==================== COVER PAGE ==================== -->
+<div class="cover">
+  <div class="cover-title">Trading Research Platform</div>
+  <div class="cover-subtitle">Complete Technical Documentation</div>
+  <div class="cover-tagline">Signal Generation &middot; Backtesting Engine &middot; Performance Metrics &middot; Risk Management</div>
+  <hr>
+  <p class="cover-description">
+    This document explains every component of the platform in precise detail: how each trading strategy generates signals, how look-ahead bias is prevented, how the backtest engine simulates trades bar by bar, how position sizes are calculated using volatility, how risk is managed with stop-losses and take-profits, and what every performance metric measures.
+  </p>
+</div>
+
+<!-- ==================== TABLE OF CONTENTS ==================== -->
+<div class="toc-section">
+  <h1 class="no-break section-title">Table of Contents</h1>
+  <table class="toc-table">
+    <thead>
+      <tr>
+        <th style="width:8%">&sect;</th>
+        <th>Section</th>
+        <th style="width:10%">Page</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Architecture Overview</td><td>3</td></tr>
+      <tr><td>2</td><td>Data Ingestion</td><td>4</td></tr>
+      <tr><td>3</td><td>Signal Convention &amp; Look-Ahead Bias</td><td>6</td></tr>
+      <tr><td>4</td><td>Trend/Momentum Builder</td><td>8</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">4.1 &nbsp; Signal Types</td><td>8</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">4.2 &nbsp; Entry Logic</td><td>16</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">4.3 &nbsp; Exit Logic</td><td>17</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">4.4 &nbsp; Filters</td><td>18</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">4.5 &nbsp; Stop-Loss &amp; Take-Profit</td><td>19</td></tr>
+      <tr><td>5</td><td>Mean Reversion Builder</td><td>20</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">5.1 &nbsp; Signal Types</td><td>20</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">5.2 &nbsp; Entry Logic</td><td>25</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">5.3 &nbsp; Exit Logic</td><td>26</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">5.4 &nbsp; Filters</td><td>27</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">5.5 &nbsp; Stop-Loss &amp; Take-Profit</td><td>28</td></tr>
+      <tr><td>6</td><td>Classic Multi-Strategy Mode</td><td>29</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">6.1 &nbsp; Signal Combination</td><td>29</td></tr>
+      <tr><td>7</td><td>Backtest Engine</td><td>31</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">7.1 &nbsp; Bar-by-Bar Simulation</td><td>31</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">7.2 &nbsp; Volatility-Based Stop-Loss Sizing</td><td>33</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">7.3 &nbsp; Position Sizing</td><td>35</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">7.4 &nbsp; Take-Profit Calculation</td><td>36</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">7.5 &nbsp; Commission &amp; Slippage</td><td>36</td></tr>
+      <tr><td class="toc-indent"></td><td class="toc-indent">7.6 &nbsp; Signal Re-Entry</td><td>37</td></tr>
+      <tr><td>8</td><td>Performance Metrics</td><td>38</td></tr>
+      <tr><td>9</td><td>Trade Log Columns</td><td>43</td></tr>
+      <tr><td>10</td><td>Parameter Sweep</td><td>45</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ==================== SECTION 1: ARCHITECTURE OVERVIEW ==================== -->
+<div class="section">
+  <h1 class="no-break section-title">1 &nbsp; Architecture Overview</h1>
+  <hr>
+
+  <p>
+    The platform is structured as five independent Python modules that communicate through well-defined interfaces. Each module has a single responsibility. There are three ways to use the platform: the <strong>Trend/Momentum Builder</strong> (build a strategy from one of 12 signals with configurable entry, exit, and filters), the <strong>Mean Reversion Builder</strong> (6 mean-reversion signals with their own entry/exit options), and the <strong>Classic Multi-Strategy Mode</strong> (select and combine multiple pre-configured strategies).
+  </p>
+
+  <h2>Module Responsibilities</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>File</th>
+        <th>Responsibility</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Data</strong></td>
+        <td><code>data.py</code></td>
+        <td>Downloads OHLCV price data from Yahoo Finance via <code>yfinance</code> and caches it in the Streamlit session.</td>
+      </tr>
+      <tr>
+        <td><strong>Strategies</strong></td>
+        <td><code>strategies.py</code></td>
+        <td>Implements all 18 signal generators across both builders, plus signal combination, entry/exit logic, and all filter functions.</td>
+      </tr>
+      <tr>
+        <td><strong>Backtest</strong></td>
+        <td><code>backtest.py</code></td>
+        <td>Bar-by-bar simulation engine: converts signals to positions, applies SL/TP, computes returns and all metrics.</td>
+      </tr>
+      <tr>
+        <td><strong>Utils</strong></td>
+        <td><code>utils.py</code></td>
+        <td>Shared helpers: return calculation, annualisation factor, all Plotly charting functions.</td>
+      </tr>
+      <tr>
+        <td><strong>App</strong></td>
+        <td><code>app.py</code></td>
+        <td>Streamlit UI entry point. Wires all modules together into a three-tab web application.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Data Flow</h2>
+  <ul>
+    <li><code>data.py</code> fetches OHLCV price bars from Yahoo Finance.</li>
+    <li><code>strategies.py</code> reads the price DataFrame and produces a signal Series (1, &minus;1, or 0 per bar).</li>
+    <li><code>backtest.py</code> reads both the signal Series and the price DataFrame, simulates trades bar by bar, and returns metrics, an equity curve, and a trade log.</li>
+    <li><code>utils.py</code> converts those outputs into Plotly charts.</li>
+    <li><code>app.py</code> orchestrates the above in order, stores results in Streamlit session state between re-renders, and displays everything across three tabs.</li>
+  </ul>
+</div>
+
+<!-- ==================== SECTION 2: DATA INGESTION ==================== -->
+<div class="section">
+  <h1>2 &nbsp; Data Ingestion</h1>
+  <hr>
+
+  <p>
+    All market data is sourced from Yahoo Finance through the <code>yfinance</code> library. The function <code>fetch_data(ticker, interval, start, end)</code> in <code>data.py</code> handles downloading, cleaning, and caching.
+  </p>
+
+  <h2>Supported Timeframes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Interval</th>
+        <th>Bar Duration</th>
+        <th>Yahoo Finance Limit</th>
+        <th>Approx. Bars per Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>1d</code></td><td>1 calendar day</td><td>No limit</td><td>252</td></tr>
+      <tr><td><code>4h</code></td><td>4 hours</td><td>730 days</td><td>~411</td></tr>
+      <tr><td><code>1h</code></td><td>1 hour</td><td>730 days</td><td>~1,638</td></tr>
+      <tr><td><code>15m</code></td><td>15 minutes</td><td>60 days</td><td>~1,638</td></tr>
+      <tr><td><code>5m</code></td><td>5 minutes</td><td>60 days</td><td>~4,914</td></tr>
+    </tbody>
+  </table>
+
+  <h2>auto_adjust = True</h2>
+  <p>
+    All downloads use <code>auto_adjust=True</code>. This instructs Yahoo Finance to return prices already adjusted for historical stock splits and dividend distributions. Without adjustment, a 2:1 stock split would appear in the price history as a 50% crash overnight — the backtest engine would then generate a massive sell signal and record a large loss that never actually happened. Adjusted prices ensure the entire price history is internally consistent and suitable for accurate backtesting.
+  </p>
+
+  <h2>Session Caching</h2>
+  <p>
+    Downloaded data is stored in <code>st.session_state</code> using a cache key of the form <code>ticker_interval_start_end</code>. If the user clicks <em>Run Backtest</em> again with identical settings, the cached DataFrame is returned immediately without a second network request. The cache is invalidated whenever the ticker, interval, or date range changes.
+  </p>
+
+  <h2>Data Cleaning</h2>
+  <ul>
+    <li>If <code>yfinance</code> returns a MultiIndex column structure (which can occur on some versions), it is flattened to standard column names.</li>
+    <li>Only the five standard OHLCV columns are retained: <code>Open</code>, <code>High</code>, <code>Low</code>, <code>Close</code>, <code>Volume</code>.</li>
+    <li>Any row where <code>Close</code> is <code>NaN</code> is dropped — this can occur at the end of the data range when the most recent bar has not yet closed.</li>
+    <li>A minimum of 100 bars is required before a backtest can run. Below this threshold the platform rejects the data with an error message.</li>
+  </ul>
+</div>
+
+<!-- ==================== SECTION 3: SIGNAL CONVENTION ==================== -->
+<div class="section">
+  <h1>3 &nbsp; Signal Convention &amp; Look-Ahead Bias Prevention</h1>
+  <hr>
+
+  <p>
+    All signal generators in the platform — regardless of which builder or strategy type — output a <strong>pandas Series</strong> with the same index as the price DataFrame. Each value in the Series is one of three integers:
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Value</th>
+        <th>Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>Long signal — go long (buy) at the next bar's open.</td></tr>
+      <tr><td><strong>&minus;1</strong></td><td>Short signal — go short (sell) at the next bar's open.</td></tr>
+      <tr><td><strong>0</strong></td><td>No signal — do nothing, stay flat.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>State-Based vs Event-Based Signals</h2>
+  <p>
+    The platform uses two signal types internally. <strong>State-based signals</strong> output &plusmn;1 on every bar where the condition holds (e.g. price is above its moving average). <strong>Event-based signals</strong> fire &plusmn;1 on exactly one bar — the bar where the condition transitions — and output 0 on all subsequent bars even if the condition persists. The Trend/Momentum Builder always converts signals to state-based internally before applying confirmation logic.
+  </p>
+
+  <h2>The One-Bar Delay Rule</h2>
+  <p>
+    Look-ahead bias is prevented by applying a one-bar shift to all signals inside the backtest engine:
+  </p>
+  <pre><code>shifted_signals = signals.shift(1).reindex(prices.index).fillna(0)</code></pre>
+  <p>
+    This means: a signal generated at the close of bar N is only acted upon at bar N+1. The position is entered at the close of bar N (used as the entry price proxy), and the trade result is calculated from bar N+1 onwards. This correctly models the real-world workflow: observe the close, decide to trade, execute at or near the next open.
+  </p>
+  <p>
+    Every indicator used in every signal (moving averages, RSI, MACD, ATR, ADX, Bollinger Bands, etc.) is computed using only data up to and including bar N. No future price information is used in any calculation. The <code>.shift(1)</code> operation is the single enforcement point — without it, any signal that reads a close price at bar N and then trades at bar N's close would be using bar N's close to determine whether to enter a trade at bar N's close, which is impossible in live trading.
+  </p>
+</div>
+
+<!-- ==================== SECTION 4: TREND/MOMENTUM BUILDER ==================== -->
+<div class="section">
+  <h1>4 &nbsp; Trend/Momentum Builder</h1>
+  <hr>
+
+  <p>
+    The Trend/Momentum Builder allows you to construct a strategy from any of 12 signal generators. Each signal captures a different aspect of price momentum or trend direction. You configure entry logic, exit logic, and optional filters independently of the signal choice.
+  </p>
+
+  <!-- 4.1 SIGNAL TYPES -->
+  <h2>4.1 &nbsp; Signal Types</h2>
+
+  <p>Quick reference — all 12 signals, their type, configurable parameters, and defaults:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Signal</th>
+        <th>Type</th>
+        <th>Key Parameters</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>TSMOM</td><td>Momentum</td><td>lookback, threshold</td><td>252 bars, 0.0</td></tr>
+      <tr><td>SMA Crossover</td><td>Trend</td><td>fast_period, slow_period</td><td>10, 50</td></tr>
+      <tr><td>EMA Crossover</td><td>Trend</td><td>fast_period, slow_period</td><td>10, 50</td></tr>
+      <tr><td>Price vs MA</td><td>Trend</td><td>period, ma_type, buffer</td><td>50, SMA, 0.0</td></tr>
+      <tr><td>MA Slope</td><td>Trend</td><td>period, ma_type, slope_threshold</td><td>20, SMA, 0.0</td></tr>
+      <tr><td>MACD Crossover</td><td>Momentum</td><td>fast, slow, signal_period</td><td>12, 26, 9</td></tr>
+      <tr><td>MACD Histogram</td><td>Momentum</td><td>fast, slow, signal_period</td><td>12, 26, 9</td></tr>
+      <tr><td>Donchian Channels</td><td>Breakout</td><td>period, buffer</td><td>20, 0.0</td></tr>
+      <tr><td>Turtle Breakout</td><td>Breakout</td><td>entry_period, exit_period</td><td>20, 10</td></tr>
+      <tr><td>ADX + DI</td><td>Trend</td><td>period, threshold</td><td>14, 25.0</td></tr>
+      <tr><td>SuperTrend</td><td>Trend</td><td>period, multiplier</td><td>10, 3.0</td></tr>
+      <tr><td>Parabolic SAR</td><td>Trend</td><td>step, max_step</td><td>0.02, 0.2</td></tr>
+    </tbody>
+  </table>
+
+  <h3>TSMOM — Time-Series Momentum</h3>
+  <p><em>Type: Momentum &nbsp;|&nbsp; Parameters: lookback (default 252), threshold (default 0.0)</em></p>
+  <p>
+    Time-Series Momentum is one of the most robust and academically documented signals in systematic trading. It measures whether an asset's own recent return is positive or negative. A positive N-bar return implies upward momentum; a negative return implies downward momentum.
+  </p>
+  <p><strong>How it is calculated:</strong></p>
+  <pre><code>Return[t] = (Close[t] - Close[t - lookback]) / Close[t - lookback]
+
+Long  (+1): Return[t] > threshold
+Short (-1): Return[t] < -threshold</code></pre>
+  <p>
+    With <code>threshold=0.0</code> (default), the signal is long whenever the lookback-bar return is positive, and short when negative. A positive threshold requires a stronger move before a signal fires, reducing noise at the cost of entering trends later.
+  </p>
+  <p>
+    <strong>Why it works:</strong> Markets exhibit momentum — assets that have performed well recently tend to continue outperforming over intermediate horizons (1–12 months). This is one of the most persistent anomalies documented in academic finance.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>The default lookback of 252 bars (one year on daily data) captures intermediate-term momentum. Shorter lookbacks (60–120 bars) capture faster momentum but with more noise.</li>
+    <li>On daily data, TSMOM flips direction whenever the 1-year return crosses zero — this produces relatively few trades per year.</li>
+    <li>TSMOM is a state-based signal: it holds +1 or &minus;1 continuously. There is no neutral zone unless a positive threshold is set.</li>
+  </ul>
+
+  <h3>SMA Crossover</h3>
+  <p><em>Type: Trend-following &nbsp;|&nbsp; Parameters: fast_period (default 10), slow_period (default 50)</em></p>
+  <p>
+    The Simple Moving Average Crossover generates signals when a shorter-period SMA crosses above or below a longer-period SMA. It is one of the oldest and most widely used trend-following techniques.
+  </p>
+  <pre><code>SMA[N][t] = mean(Close[t-N+1 : t+1])   # arithmetic mean of last N closes
+
+Long  (+1): fast[t] > slow[t]  AND  fast[t-1] <= slow[t-1]  (fast crosses above slow)
+Short (-1): fast[t] < slow[t]  AND  fast[t-1] >= slow[t-1]  (fast crosses below slow)</code></pre>
+  <p>
+    The crossover is an <strong>event-based signal</strong>: it fires a +1 or &minus;1 only on the bar of the crossover itself, not on every subsequent bar where the fast MA is above the slow MA. The backtest engine forward-fills this into a held position (holding until the opposite crossover).
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li><code>fast_period</code> must be strictly less than <code>slow_period</code>.</li>
+    <li>Shorter fast periods (e.g. 5/20) generate more signals and enter trends earlier, but also produce more whipsaws in sideways markets.</li>
+    <li>Longer combinations (e.g. 50/200 — the "Golden Cross") generate fewer signals and are more robust in trending markets, but enter trends late and exit late.</li>
+    <li>SMA crossovers lag by nature — they cannot signal the exact turning point. Their value comes from riding the middle portion of sustained trends.</li>
+  </ul>
+
+  <h3>EMA Crossover</h3>
+  <p><em>Type: Trend-following &nbsp;|&nbsp; Parameters: fast_period (default 10), slow_period (default 50)</em></p>
+  <p>
+    Like SMA Crossover but uses Exponential Moving Averages — each bar's EMA gives progressively more weight to recent prices. The EMA reacts faster to price changes than the SMA.
+  </p>
+  <pre><code>EMA multiplier  k = 2 / (N + 1)
+EMA[t] = Close[t] * k  +  EMA[t-1] * (1 - k)
+
+Long  (+1): fast EMA crosses above slow EMA
+Short (-1): fast EMA crosses below slow EMA</code></pre>
+  <p>
+    Signal logic is identical to SMA Crossover — long when fast EMA crosses above slow EMA, short when it crosses below. Because EMAs react more quickly, crossovers occur sooner than with SMAs, generating more trades and entering trends earlier but with more whipsaws.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li><code>fast_period</code> must be strictly less than <code>slow_period</code>.</li>
+    <li>EMA crossovers are more sensitive to recent price spikes than SMA crossovers — a single large bar can cause a crossover that reverses within a few bars.</li>
+    <li>For the same parameter values, EMA crossovers will typically generate more trades than SMA crossovers.</li>
+  </ul>
+
+  <h3>Price vs MA</h3>
+  <p><em>Type: Trend &nbsp;|&nbsp; Parameters: period (default 50), ma_type (SMA/EMA, default SMA), buffer (default 0.0)</em></p>
+  <p>
+    A state-based signal: long while price is above its moving average, short while below. Unlike crossover signals, this holds &plusmn;1 continuously — it does not require a transition to fire.
+  </p>
+  <pre><code>Long  (+1): Close[t] > MA[t] * (1 + buffer)
+Short (-1): Close[t] < MA[t] * (1 - buffer)</code></pre>
+  <p>
+    The <code>buffer</code> parameter creates a neutral zone around the MA. With <code>buffer=0.02</code> (2%), price must move 2% above the MA to go long, and 2% below to go short. This prevents frequent signal flips when price is oscillating around the average.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>This is the simplest trend filter available. It generates a signal on every bar and produces many trades.</li>
+    <li>The buffer is important for reducing noise — without it, price crossing the MA repeatedly over a few bars generates many rapid reversals.</li>
+    <li>A 200-period SMA version of this signal is functionally equivalent to the classic "price above/below 200-day MA" regime filter.</li>
+  </ul>
+
+  <h3>MA Slope</h3>
+  <p><em>Type: Trend &nbsp;|&nbsp; Parameters: period (default 20), ma_type (SMA/EMA, default SMA), slope_threshold (default 0.0)</em></p>
+  <p>
+    Rather than comparing price to its MA, this signal measures whether the MA itself is rising or falling.
+  </p>
+  <pre><code>Slope[t] = MA[t] - MA[t-1]
+
+Long  (+1): Slope[t] > slope_threshold
+Short (-1): Slope[t] < -slope_threshold</code></pre>
+  <p>
+    A rising MA indicates a prevailing uptrend; a falling MA indicates a downtrend. This is smoother than Price vs MA because it ignores short-term price spikes that temporarily cross the average while the trend remains intact.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>MA Slope with period=20 is quite responsive and will flip frequently in choppy markets.</li>
+    <li>The <code>slope_threshold</code> parameter can filter out near-flat MAs — only trading when the MA is sloping with meaningful conviction.</li>
+    <li>For raw slope values, the threshold must be calibrated to the asset's price level and volatility — a slope threshold of 0.5 means something very different for a $5 stock vs a $500 stock. Consider using percentage-normalised slope for cross-asset consistency.</li>
+  </ul>
+
+  <h3>MACD Crossover</h3>
+  <p><em>Type: Momentum &nbsp;|&nbsp; Parameters: fast (default 12), slow (default 26), signal_period (default 9)</em></p>
+  <p>
+    The Moving Average Convergence Divergence (MACD) is a trend-momentum hybrid that measures the relationship between two EMAs. The signal line is an EMA of the MACD line itself.
+  </p>
+  <pre><code>MACD Line   = EMA(Close, fast) - EMA(Close, slow)
+Signal Line = EMA(MACD Line, signal_period)
+Histogram   = MACD Line - Signal Line
+
+Long  (+1): MACD Line crosses ABOVE Signal Line
+Short (-1): MACD Line crosses BELOW Signal Line</code></pre>
+  <p>
+    This is an <strong>event-based signal</strong>: it fires only on the bar of the crossover. The default parameters (12, 26, 9) are the classic MACD settings used across institutional and retail platforms worldwide.
+  </p>
+  <p><strong>Why it works:</strong> The MACD measures the rate of change of a trend. A crossover above the signal line indicates accelerating upward momentum; below indicates accelerating downward momentum. It identifies transitions in trend momentum, not just trend direction.</p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>MACD crossovers lag by the signal period (9 bars by default) — the signal line is a 9-bar EMA of the MACD line, so crossovers occur after the underlying momentum shift.</li>
+    <li>MACD performs poorly in ranging, choppy markets where the lines oscillate around zero and produce frequent false crossovers.</li>
+    <li>The chart displays the MACD line, signal line, and histogram as a panel below the price chart.</li>
+  </ul>
+
+  <h3>MACD Histogram</h3>
+  <p><em>Type: Momentum &nbsp;|&nbsp; Parameters: fast (default 12), slow (default 26), signal_period (default 9)</em></p>
+  <p>
+    Uses the same MACD calculation but generates a state-based signal from the histogram (MACD Line minus Signal Line) rather than a crossover event.
+  </p>
+  <pre><code>Histogram[t] = MACD Line[t] - Signal Line[t]
+
+Long  (+1): Histogram[t] > 0  (MACD above signal — momentum accelerating upward)
+Short (-1): Histogram[t] < 0  (MACD below signal — momentum accelerating downward)</code></pre>
+  <p>
+    Unlike MACD Crossover (which fires only on the bar of the crossover), MACD Histogram holds +1 or &minus;1 for the entire period the histogram is on one side of zero. This produces longer-held positions and trades every flip of the histogram.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>The histogram oscillates frequently — MACD Histogram generates more trades than MACD Crossover.</li>
+    <li>The chart displays the histogram as green/red bars alongside the MACD and signal lines.</li>
+    <li>Because MACD Histogram is state-based, it is equivalent to MACD Crossover but held continuously rather than only on the crossover bar.</li>
+  </ul>
+
+  <h3>Donchian Channels</h3>
+  <p><em>Type: Breakout &nbsp;|&nbsp; Parameters: period (default 20), buffer (default 0.0)</em></p>
+  <p>
+    Donchian Channels define a price envelope using the highest high and lowest low over a rolling window. A breakout above the upper channel signals strength; a breakout below the lower channel signals weakness.
+  </p>
+  <pre><code>Upper Channel[t] = max(High[t-period : t])   # highest high over last 'period' bars
+Lower Channel[t] = min(Low[t-period  : t])   # lowest low  over last 'period' bars
+
+Long  (+1): Close[t] > Upper Channel[t-1] * (1 + buffer)   # breakout above upper
+Short (-1): Close[t] < Lower Channel[t-1] * (1 - buffer)   # breakdown below lower</code></pre>
+  <p>
+    Signals fire only on the <strong>first bar</strong> of the breakout (event-based). Using the previous bar's channel (<code>t-1</code>) is critical to prevent look-ahead bias — the channel boundary is fully known at bar N&minus;1's close before bar N opens.
+  </p>
+  <p>
+    The <code>buffer</code> parameter requires the breakout to exceed the channel by a percentage margin, filtering out marginal breakouts that barely clip the channel boundary.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>A 20-bar Donchian Channel (one month on daily data) is a classic trend-following parameter.</li>
+    <li>Donchian signals can go through extended drawdowns in choppy markets where breakouts fail repeatedly.</li>
+    <li>The channel boundaries are displayed on the price chart as a shaded envelope.</li>
+  </ul>
+
+  <h3>Turtle Breakout</h3>
+  <p><em>Type: Breakout &nbsp;|&nbsp; Parameters: entry_period (default 20), exit_period (default 10)</em></p>
+  <p>
+    The Turtle Trading system, made famous by Richard Dennis in the 1980s, uses two Donchian channels of different lengths — a longer one for entry and a shorter one for exit.
+  </p>
+  <pre><code>Entry Long:  Close > Highest High over last entry_period bars
+Entry Short: Close < Lowest Low  over last entry_period bars
+
+Exit Long:   Close < Lowest Low  over last exit_period bars
+Exit Short:  Close > Highest High over last exit_period bars</code></pre>
+  <p>
+    This is a <strong>state-based signal</strong>: it holds +1 after a long entry until the exit condition is met, and &minus;1 after a short entry until the exit condition is met. The exit period is typically half the entry period.
+  </p>
+  <p>
+    <strong>Why it differs from Donchian:</strong> Donchian uses a single channel — it exits when an opposite breakout fires. Turtle uses a separate, shorter channel for exits, meaning it exits a long trade when price breaks a 10-bar low, not when it breaks a 20-bar high in the other direction. This produces earlier exits and preserves more profit.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li><code>entry_period</code> must be greater than <code>exit_period</code>.</li>
+    <li>The 20/10 default is the classic Turtle configuration.</li>
+    <li>The original Turtle system also used a 55/20 combination as a secondary (more aggressive) entry system.</li>
+  </ul>
+
+  <h3>ADX + DI</h3>
+  <p><em>Type: Trend + Crossover &nbsp;|&nbsp; Parameters: period (default 14), threshold (default 25.0)</em></p>
+  <p>
+    The Average Directional Index (ADX) combined with Directional Indicators (+DI and &minus;DI) identifies both the strength of a trend and its direction.
+  </p>
+  <pre><code>+DI[t] = 100 * EMA(+DM, period) / ATR(period)
+-DI[t] = 100 * EMA(-DM, period) / ATR(period)
+ADX[t] = 100 * EMA(|+DI - -DI| / (+DI + -DI), period)
+
+Long  (+1): ADX[t] > threshold  AND  +DI crosses ABOVE -DI
+Short (-1): ADX[t] > threshold  AND  -DI crosses ABOVE +DI
+Flat  ( 0): ADX[t] < threshold  (insufficient trend strength)</code></pre>
+  <p>
+    The ADX acts as a gate: signals only fire when the market is trending above the threshold. This prevents the DI crossovers from generating false signals during flat, ranging conditions.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>ADX values below 20–25 indicate a ranging or flat market. Between 25–50 indicates a moderate trend. Above 50 indicates a strong trend.</li>
+    <li>ADX lags — it confirms trends after they have begun, not at their start.</li>
+    <li>The threshold of 25 is widely cited as the boundary between ranging and trending. Increasing it to 30–35 reduces the number of signals but increases their quality.</li>
+    <li>The chart displays ADX and &plusmn;DI as a panel below the price chart.</li>
+  </ul>
+
+  <h3>SuperTrend</h3>
+  <p><em>Type: Trend &nbsp;|&nbsp; Parameters: period (default 10), multiplier (default 3.0)</em></p>
+  <p>
+    SuperTrend is an ATR-based trailing band indicator that produces a single support/resistance line that flips side when price crosses it.
+  </p>
+  <pre><code>Step 1: ATR = Average True Range over period bars
+
+Step 2: Upper Band = (High + Low) / 2  +  multiplier * ATR
+        Lower Band = (High + Low) / 2  -  multiplier * ATR
+
+Step 3: The SuperTrend line tracks whichever band is active.
+        Starts on the Lower Band (bullish).
+        Switches to Upper Band (bearish) when Close crosses below Lower Band.
+        Switches back to Lower Band when Close crosses above Upper Band.
+
+Long  (+1): Close > SuperTrend line  (price above the trailing support)
+Short (-1): Close < SuperTrend line  (price below the trailing resistance)</code></pre>
+  <p>
+    This is a <strong>state-based signal</strong> — it holds &plusmn;1 until price crosses the SuperTrend line.
+  </p>
+  <p>
+    <strong>Why it works:</strong> The ATR-based band automatically widens in volatile conditions, preventing premature stop-outs during normal volatility. The multiplier controls how far the band sits from price — higher values mean fewer flips and longer-held positions.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>SuperTrend is displayed on the price chart as a green (bullish) or red (bearish) line beneath/above price.</li>
+    <li>The period and multiplier together determine sensitivity — <code>period=7, multiplier=3</code> is more reactive; <code>period=14, multiplier=3</code> is smoother.</li>
+    <li>SuperTrend can produce extended flat periods on highly volatile assets where the band keeps getting crossed back and forth.</li>
+  </ul>
+
+  <h3>Parabolic SAR</h3>
+  <p><em>Type: Trend &nbsp;|&nbsp; Parameters: step (default 0.02), max_step (default 0.2)</em></p>
+  <p>
+    The Parabolic Stop and Reverse (PSAR) system, developed by J. Welles Wilder, uses an accelerating trailing stop that tightens as a trade becomes more profitable.
+  </p>
+  <pre><code>AF starts at 'step' and increases by 'step' each bar the extreme point extends,
+up to a maximum of 'max_step'.
+
+SAR[t] = SAR[t-1]  +  AF * (Extreme Point - SAR[t-1])
+
+Long  (+1): Close > SAR  (price above the trailing dot)
+Short (-1): Close < SAR  (price below the trailing dot)</code></pre>
+  <p>
+    When price crosses the SAR, the system reverses: a long becomes a short (or vice versa). This is a <strong>state-based signal</strong> — it is always either long or short, never flat.
+  </p>
+  <p>
+    <strong>Why it works:</strong> The accelerating factor means the SAR tightens as a trade runs further in your favour — locking in profits as the move extends. Early in a trade the SAR is loose (allows the position to breathe); later it tightens.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>Lower step values produce a slower-moving SAR that stays in trends longer but gives back more profit on reversals.</li>
+    <li>Higher step values produce a faster SAR that exits sooner but also generates more false reversals in choppy markets.</li>
+    <li>The PSAR dots are displayed on the price chart.</li>
+    <li>Because PSAR is always long or short, it will trade continuously — there are no flat (neutral) periods unless filtered externally.</li>
+  </ul>
+
+  <!-- 4.2 ENTRY LOGIC -->
+  <h2>4.2 &nbsp; Entry Logic</h2>
+
+  <h3>Confirmation Bars</h3>
+  <p>
+    By default (slider = 1), a trade opens immediately on the first bar the signal fires. Setting confirmation bars to N requires <strong>N consecutive bars</strong> all showing the same signal direction before the trade opens.
+  </p>
+  <p>
+    <strong>Example:</strong> with <code>confirmation_bars = 3</code>, if the signal reads +1 on bars 10, 11, 12, the trade opens at the close of bar 12. If the signal reads +1, +1, &minus;1, no trade opens — the streak resets.
+  </p>
+  <p>
+    The confirmation bars slider ranges from 1 (enter immediately) to 10. This is most useful for noisier signals (crossovers, Donchian) where a multi-bar confirmation filters out one-bar false breakouts.
+  </p>
+  <div class="note">
+    <strong>Note:</strong> Confirmation is applied after the signal has been forward-filled into state form, so it works correctly for both state-based and event-based signals.
+  </div>
+
+  <!-- 4.3 EXIT LOGIC -->
+  <h2>4.3 &nbsp; Exit Logic</h2>
+
+  <p>Two exit rules are available:</p>
+
+  <h3>Signal Reversal (default)</h3>
+  <p>
+    The position closes when the signal flips to the opposite direction. A long trade closes when the signal becomes &minus;1; a short trade closes when the signal becomes +1. This is the most natural exit for state-based trend signals — you stay in the trade as long as the trend persists.
+  </p>
+
+  <h3>Fixed Bars Held</h3>
+  <p>
+    The position is force-closed after a fixed number of bars regardless of the signal. The slider ranges from 1 to 200 bars (default 20). The trade closes at the close of bar (entry + max_bars). If the signal reverses before then, the reversal exit takes precedence.
+  </p>
+  <div class="note">
+    <strong>Note:</strong> SL/TP (configured in the Exit Logic section) operates independently of and alongside these rules. A trade can be exited by its SL or TP even before the signal exit condition is met.
+  </div>
+
+  <!-- 4.4 FILTERS -->
+  <h2>4.4 &nbsp; Filters</h2>
+
+  <p>
+    Three optional filters are available. Each filter zeroes out signal bars that do not pass the condition — the trade simply does not open on those bars.
+  </p>
+
+  <h3>Long Only / Short Only</h3>
+  <p>
+    Directional constraints. <strong>Long only</strong> means all short (&minus;1) signals are ignored. <strong>Short only</strong> means all long (+1) signals are ignored. Checking both simultaneously produces no trades.
+  </p>
+
+  <h3>ADX Strength Filter</h3>
+  <p>
+    ADX (Average Directional Index) measures how strongly trending a market is on a scale of 0–100, regardless of direction. When enabled, any signal bar where ADX is below the minimum threshold is zeroed out — only trades during confirmed trending conditions.
+  </p>
+  <pre><code>Signal[t] = 0  if ADX[t] < adx_min</code></pre>
+  <p>
+    Values below 20–25 indicate a ranging or choppy market. The default threshold is 25. This filter is most effective for crossover strategies that generate many false signals in flat markets.
+  </p>
+
+  <h3>Higher-TF Trend Filter</h3>
+  <p>
+    Resamples the existing price data to a higher timeframe, computes a moving average on that higher-TF data, and uses it as a directional gate. Long signals are blocked when the higher-TF trend is bearish; short signals are blocked when it is bullish.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Trading Interval</th>
+        <th>Higher TF Used</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>5 minutes</td><td>1 hour</td></tr>
+      <tr><td>15 minutes</td><td>4 hours</td></tr>
+      <tr><td>1 hour</td><td>1 day (daily)</td></tr>
+      <tr><td>4 hours</td><td>1 day (daily)</td></tr>
+      <tr><td>1 day</td><td>1 week (weekly)</td></tr>
+    </tbody>
+  </table>
+  <p>
+    The MA period for the higher-TF trend is configurable (default 50 bars on the higher TF). This filter converts any strategy into a regime-aware strategy — only trading in the direction of the bigger picture.
+  </p>
+
+  <!-- 4.5 STOP-LOSS & TAKE-PROFIT -->
+  <h2>4.5 &nbsp; Stop-Loss &amp; Take-Profit</h2>
+
+  <p>
+    SL/TP is disabled by default. When enabled, volatility-based stops are calculated at trade entry. See Section 7.2 for the full calculation methodology. The TP ratio slider (default 2.0) sets the reward-to-risk ratio — a TP ratio of 2.0 means the take-profit is placed at twice the stop-loss distance from entry.
+  </p>
+  <p>
+    A <strong>trailing stop</strong> option is also available. When enabled, the stop-loss level ratchets up (for longs) or down (for shorts) as the trade moves in your favour, using an ATR-based calculation.
+  </p>
+</div>
+
+<!-- ==================== SECTION 5: MEAN REVERSION BUILDER ==================== -->
+<div class="section">
+  <h1>5 &nbsp; Mean Reversion Builder</h1>
+  <hr>
+
+  <p>
+    Mean reversion strategies exploit the tendency of prices to return to their average after temporary deviations. They perform best in range-bound, low-trend markets and tend to struggle during sustained directional trends.
+  </p>
+
+  <!-- 5.1 SIGNAL TYPES -->
+  <h2>5.1 &nbsp; Signal Types</h2>
+
+  <p>Quick reference — all 6 mean-reversion signals:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Signal</th>
+        <th>Type</th>
+        <th>Key Parameters</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Z-Score</td><td>State</td><td>lookback, entry_threshold, exit_threshold</td><td>20, 2.0, 0.5</td></tr>
+      <tr><td>Bollinger Bands</td><td>Event</td><td>period, std_dev</td><td>20, 2.0</td></tr>
+      <tr><td>RSI</td><td>Event</td><td>period, oversold, overbought</td><td>14, 30, 70</td></tr>
+      <tr><td>Short-Term Reversal</td><td>State</td><td>lookback, threshold</td><td>5, 2.0%</td></tr>
+      <tr><td>MA Deviation</td><td>State</td><td>period, ma_type, threshold</td><td>20, SMA, 2.0%</td></tr>
+      <tr><td>Range Reversion</td><td>State</td><td>lookback, threshold</td><td>20, 20%</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Z-Score</h3>
+  <p><em>Type: Mean-reversion (state) &nbsp;|&nbsp; Parameters: lookback (default 20), entry_threshold (default 2.0), exit_threshold (default 0.5)</em></p>
+  <p>
+    The Z-Score measures how many standard deviations the current price is from its rolling mean. It produces a state-based signal with built-in entry and exit thresholds.
+  </p>
+  <pre><code>z[t] = (Close[t] - mean(Close, lookback)) / std(Close, lookback)
+
+Long  (+1):  z[t] < -entry_threshold    (price more than 2σ below mean)
+Exit long:   z[t] > -exit_threshold     (price has reverted past -0.5σ)
+
+Short (-1):  z[t] > +entry_threshold    (price more than 2σ above mean)
+Exit short:  z[t] < +exit_threshold     (price has reverted past +0.5σ)</code></pre>
+  <p>
+    This is the most complete MR signal — both entry and exit thresholds are configurable. The <code>exit_threshold</code> determines how far the reversion must travel before the trade closes. <code>exit_threshold=0</code> means exit at the mean; <code>exit_threshold=0.5</code> (default) means exit when price has reverted to within 0.5&sigma; of the mean (partial reversion capture).
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>Shorter lookbacks (10–15) make the Z-Score more reactive to recent moves, generating more signals.</li>
+    <li>The entry threshold controls selectivity — higher values (e.g. 2.5–3.0) produce fewer but higher-conviction entries.</li>
+    <li>The Z-Score assumes approximate stationarity over the lookback window. If price is in a persistent trend, the mean shifts and extreme Z-Score values may not revert.</li>
+  </ul>
+
+  <h3>Bollinger Bands</h3>
+  <p><em>Type: Mean-reversion (event) &nbsp;|&nbsp; Parameters: period (default 20), std_dev (default 2.0)</em></p>
+  <p>
+    Bollinger Bands define a volatility envelope around a moving average. The upper and lower bands are placed at &plusmn;<code>std_dev</code> standard deviations from the MA. When price touches or crosses a band, it is considered statistically extreme and likely to revert.
+  </p>
+  <pre><code>Middle Band = SMA(Close, period)
+Upper Band  = Middle Band + std_dev * std(Close, period)
+Lower Band  = Middle Band - std_dev * std(Close, period)
+
+Long  (+1): Close crosses DOWN through Lower Band  (price enters oversold zone)
+Short (-1): Close crosses UP through Upper Band    (price enters overbought zone)</code></pre>
+  <p>
+    Signals fire only on the <strong>bar price first crosses the band</strong> (event-based). This is a contrarian entry — buying when price is falling below the lower band, shorting when rising above the upper band.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>Bollinger Bands adapt to volatility — in high-volatility periods the bands widen, requiring a larger move to trigger a signal; in low-volatility periods the bands narrow, making signals more frequent.</li>
+    <li>The default 2.0 std_dev setting means approximately 95% of price action stays within the bands under normal conditions.</li>
+    <li>In trending markets, price can "walk the band" — repeatedly triggering signals without reverting. The ADX/ranging filter helps avoid this.</li>
+  </ul>
+
+  <h3>RSI</h3>
+  <p><em>Type: Mean-reversion (event) &nbsp;|&nbsp; Parameters: period (default 14), oversold (default 30), overbought (default 70)</em></p>
+  <p>
+    The Relative Strength Index (RSI) measures the speed and change of price movements, normalised to a 0–100 scale. Values below the oversold threshold indicate the asset is potentially oversold; values above the overbought threshold indicate potential overbuying.
+  </p>
+  <pre><code>RS    = Average Gain over period / Average Loss over period
+RSI   = 100 - (100 / (1 + RS))
+
+Long  (+1): RSI crosses back ABOVE oversold level  (RSI was below, now rising above)
+Short (-1): RSI crosses back BELOW overbought level (RSI was above, now falling below)</code></pre>
+  <p>
+    <strong>Important:</strong> The signal fires on <strong>reversal confirmation</strong> — it enters when RSI <em>exits</em> the oversold/overbought zone, not when it enters it. This ensures the extreme reading is abating, not deepening.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>The 30/70 defaults are conventional. Tighter bands (40/60) generate more signals; wider bands (20/80) generate fewer but more extreme entries.</li>
+    <li>In strong trending markets, RSI can remain in oversold/overbought territory for extended periods without reverting. The RSI signal is not suitable as a standalone strategy in trending markets.</li>
+    <li>The chart displays RSI as a panel below the price chart with horizontal lines at the oversold and overbought levels.</li>
+  </ul>
+
+  <h3>Short-Term Reversal</h3>
+  <p><em>Type: Mean-reversion (state) &nbsp;|&nbsp; Parameters: lookback (default 5), threshold (default 2.0%)</em></p>
+  <p>
+    Short-Term Reversal fades recent price moves — it bets that large short-term moves will partially retrace. This is a contrarian signal based on the short-term overreaction effect.
+  </p>
+  <pre><code>Return[t] = (Close[t] - Close[t - lookback]) / Close[t - lookback] * 100
+
+Long  (+1): Return[t] < -threshold   (price has fallen more than threshold% — bet on bounce)
+Short (-1): Return[t] > +threshold   (price has risen more than threshold% — bet on pullback)</code></pre>
+  <p>
+    The signal holds &plusmn;1 while the condition persists. As price reverts, the lookback return shrinks back toward zero and the signal turns off.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>This works at short horizons (1–10 bars) where momentum is often negative. At longer horizons, momentum tends to be positive (the TSMOM effect).</li>
+    <li>The threshold prevents trading on every minor fluctuation.</li>
+    <li>Short-Term Reversal is most effective in liquid, large-cap assets where temporary overreactions are more likely to revert quickly.</li>
+  </ul>
+
+  <h3>MA Deviation</h3>
+  <p><em>Type: Mean-reversion (state) &nbsp;|&nbsp; Parameters: period (default 20), ma_type (SMA/EMA, default SMA), threshold (default 2.0%)</em></p>
+  <p>
+    MA Deviation measures how far price has stretched from its moving average as a percentage.
+  </p>
+  <pre><code>Deviation[t] = (Close[t] - MA[t]) / MA[t] * 100
+
+Long  (+1): Deviation[t] < -threshold   (price more than threshold% below MA)
+Short (-1): Deviation[t] > +threshold   (price more than threshold% above MA)</code></pre>
+  <p>
+    This is the percentage-based cousin of Z-Score. Rather than normalising by standard deviation, it uses a fixed percentage threshold. This makes it more intuitive but less adaptive to changing volatility — in a high-volatility regime, the same percentage deviation may be less extreme than usual.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>The threshold should be calibrated to the asset's typical daily range. For equities, 2–3% is reasonable; for cryptocurrencies, 5–10% may be needed.</li>
+    <li>MA Deviation is simpler to interpret than Z-Score but does not automatically adjust for regime volatility changes.</li>
+  </ul>
+
+  <h3>Range Reversion</h3>
+  <p><em>Type: Mean-reversion (state) &nbsp;|&nbsp; Parameters: lookback (default 20), threshold (default 20%)</em></p>
+  <p>
+    Range Reversion measures where the current price sits within the recent high-low range.
+  </p>
+  <pre><code>Range Position[t] = (Close[t] - Low(lookback)) / (High(lookback) - Low(lookback)) * 100
+
+Long  (+1): Range Position[t] < threshold         (price in the bottom threshold% of range)
+Short (-1): Range Position[t] > (100 - threshold) (price in the top threshold% of range)</code></pre>
+  <p>
+    With <code>threshold=20%</code>, the signal goes long when price is in the bottom 20% of its 20-bar range, and short when in the top 20%.
+  </p>
+  <p><strong>Practical considerations:</strong></p>
+  <ul>
+    <li>This is a purely relative measure — it doesn't depend on absolute price levels or volatility scaling.</li>
+    <li>It works best in genuinely range-bound markets where the channel boundaries are somewhat predictable.</li>
+    <li>In a trending market, the range shifts progressively and the signal will always be near the extreme of the range, generating continuous signals in the trend direction — the opposite of what is intended.</li>
+  </ul>
+
+  <!-- 5.2 ENTRY LOGIC -->
+  <h2>5.2 &nbsp; Entry Logic</h2>
+
+  <h3>Confirmation Bars</h3>
+  <p>
+    Identical to the Trend/Momentum Builder. Setting this above 1 requires N consecutive bars confirming the signal direction before entry. For state-based MR signals (Z-Score, STR, MA Deviation, Range Reversion), this requires N consecutive bars where the extreme condition persists. For event-based signals (RSI, Bollinger), the signal is first forward-filled before confirmation is applied.
+  </p>
+
+  <h3>Wait for Indicator to Start Reversing</h3>
+  <p>
+    When this checkbox is enabled, the platform holds off entry until the underlying indicator ticks in the right direction on that bar.
+  </p>
+  <ul>
+    <li>For a <strong>long signal</strong>: the indicator must be rising (<code>indicator[today] &gt; indicator[yesterday]</code>).</li>
+    <li>For a <strong>short signal</strong>: the indicator must be falling.</li>
+  </ul>
+  <p>
+    <strong>Example with RSI:</strong> if RSI is at 25 and still falling to 24, the entry is suppressed. The trade only opens on the first bar RSI ticks upward — providing early evidence that the selling pressure is abating.
+  </p>
+  <p>
+    This is a one-bar check with no minimum magnitude requirement. It acts as a sanity filter rather than a strong confirmation signal, but reduces the frequency of entering while the move is still running against you.
+  </p>
+
+  <!-- 5.3 EXIT LOGIC -->
+  <h2>5.3 &nbsp; Exit Logic</h2>
+
+  <p>Three exit rules are available for Mean Reversion strategies:</p>
+
+  <h3>Mean Reversion (default)</h3>
+  <p>
+    The position closes when the signal returns to neutral (0). For state-based signals, this means the extreme condition is no longer active — the price has reverted sufficiently for the signal to turn off. This is the most natural exit for MR: the trade closes once the reversion is complete.
+  </p>
+
+  <h3>Signal Reversal</h3>
+  <p>
+    The position holds until an opposite entry signal fires — e.g. a long trade stays open until a short signal activates. This produces longer average trade durations than the mean reversion exit.
+  </p>
+
+  <h3>Fixed Bars Held</h3>
+  <p>
+    Force-closes the position after a fixed number of bars (default 10, range 1–100). This is appropriate when you want to capture short-term mean reversion quickly and limit exposure time regardless of whether full reversion has occurred.
+  </p>
+
+  <!-- 5.4 FILTERS -->
+  <h2>5.4 &nbsp; Filters</h2>
+
+  <h3>Long Only / Short Only</h3>
+  <p>
+    Same as T/M Builder. Directional constraints that block trades in the excluded direction.
+  </p>
+
+  <h3>Ranging Market Filter</h3>
+  <p>
+    Blocks entries when ADX is <strong>above</strong> the maximum threshold (default 25). The logic is the inverse of the T/M ADX filter — MR strategies need a ranging market, so entries are blocked when ADX indicates a strong trend.
+  </p>
+  <pre><code>Signal[t] = 0  if ADX[t] > adx_max</code></pre>
+  <p>
+    ADX above 25–30 typically indicates the market is trending directionally, making mean reversion dangerous.
+  </p>
+
+  <h3>Low-Volatility Filter</h3>
+  <p>
+    Blocks entries when annualised volatility exceeds the threshold (default 40%). Volatility is computed as the rolling 20-bar standard deviation of returns, annualised by multiplying by sqrt(252).
+  </p>
+  <pre><code>ann_vol  = std(returns, 20) * sqrt(252)
+Signal[t] = 0  if ann_vol[t] > vol_max</code></pre>
+  <p>
+    High-volatility regimes make mean reversion risky — extreme readings can become more extreme before reverting. This filter protects against entering during market dislocations.
+  </p>
+
+  <!-- 5.5 SL/TP -->
+  <h2>5.5 &nbsp; Stop-Loss &amp; Take-Profit</h2>
+
+  <p>
+    SL/TP is disabled by default for mean reversion strategies. The signal exit threshold (e.g. Z-Score <code>exit_threshold</code>) acts as the primary risk control — the trade closes when the reversion is deemed complete. Adding volatility-based SL/TP can cause premature exits before the reversion fully plays out, particularly on assets with high intraday noise. If enabled, the same volatility-based calculation described in Section 7.2 applies.
+  </p>
+</div>
+
+<!-- ==================== SECTION 6: CLASSIC MULTI-STRATEGY MODE ==================== -->
+<div class="section">
+  <h1>6 &nbsp; Classic Multi-Strategy Mode</h1>
+  <hr>
+
+  <p>
+    The Classic mode allows multiple pre-configured strategies to be selected simultaneously, with their signals combined into a single composite signal. Each strategy in Classic mode has fixed parameters tuned for its signal type — there are no parameter sliders. The value of Classic mode lies in its signal combination logic.
+  </p>
+
+  <!-- 6.1 SIGNAL COMBINATION -->
+  <h2>6.1 &nbsp; Signal Combination</h2>
+
+  <p>
+    When two or more strategies are selected in Classic mode, their individual signal Series are combined into a composite signal using one of three methods:
+  </p>
+
+  <h3>Method 1: Majority Vote</h3>
+  <p>
+    The composite signal at each bar is the sign of the sum of individual signals. A long (+1) composite is produced only when more strategies signal long than short; a short (&minus;1) only when more signal short. A tie produces a flat (0) signal.
+  </p>
+  <pre><code>composite[t] = sign( sum(signal_i[t] for all i) )
+
+Example — 3 strategies:
+  Strategy A: +1
+  Strategy B: +1
+  Strategy C: -1
+  Sum = +1  →  composite = +1 (majority long)</code></pre>
+  <p>
+    Majority Vote is the most conservative combination method — it requires true consensus before acting. It reduces false signals but also reduces trade frequency compared to any individual strategy.
+  </p>
+
+  <h3>Method 2: Weighted Average</h3>
+  <p>
+    Each strategy is assigned a weight (configurable, default equal weights). The composite signal is the weighted sum of individual signals, thresholded to produce &plusmn;1 or 0.
+  </p>
+  <pre><code>raw_composite[t] = sum( weight_i * signal_i[t] )
+
+composite[t] = +1  if raw_composite[t] > threshold
+composite[t] = -1  if raw_composite[t] < -threshold
+composite[t] =  0  otherwise</code></pre>
+  <p>
+    Weights are normalised to sum to 1 before the calculation. The threshold (default 0.0) controls how much weighted agreement is needed — a threshold of 0.5 with equal weights among 3 strategies means at least 2 of 3 must agree before a signal fires.
+  </p>
+  <p>
+    Weighted Average is more flexible than Majority Vote because it allows you to assign higher confidence to certain strategies. A strategy with a weight of 0.5 effectively counts as much as the other two combined.
+  </p>
+
+  <h3>Method 3: Threshold</h3>
+  <p>
+    A simple threshold on the sum of signals. The composite fires +1 only if the number of long signals &ge; the threshold; &minus;1 only if the number of short signals &ge; the threshold.
+  </p>
+  <pre><code>n_long  = count( signal_i[t] == +1 )
+n_short = count( signal_i[t] == -1 )
+
+composite[t] = +1  if n_long  >= threshold
+composite[t] = -1  if n_short >= threshold
+composite[t] =  0  otherwise</code></pre>
+  <p>
+    With 4 strategies selected and threshold=3, all 4 must agree for a signal (or at least 3 of 4). Setting threshold=1 is equivalent to a union — any strategy signalling is enough to act.
+  </p>
+
+  <div class="note">
+    <strong>Note on signal combination timing:</strong> All signals are computed independently using the one-bar delay rule (Section 3) before combination. The combination logic operates on the already-shifted signals, so there is no additional look-ahead from the combination step itself.
+  </div>
+</div>
+
+<!-- ==================== SECTION 7: BACKTEST ENGINE ==================== -->
+<div class="section">
+  <h1>7 &nbsp; Backtest Engine</h1>
+  <hr>
+
+  <p>
+    The backtest engine in <code>backtest.py</code> converts a signal Series and a price DataFrame into a complete simulation of trading over the historical period. It operates bar by bar, respecting the one-bar delay rule, and produces a comprehensive set of outputs: an equity curve, a trade log, and all performance metrics.
+  </p>
+
+  <!-- 7.1 BAR-BY-BAR SIMULATION -->
+  <h2>7.1 &nbsp; Bar-by-Bar Simulation</h2>
+
+  <p>
+    The simulation iterates through every bar in the price history in chronological order. The order of operations at each bar is strictly defined to prevent any form of look-ahead:
+  </p>
+  <ol>
+    <li><strong>Read the shifted signal</strong> for the current bar (signal from the previous bar's close, already shifted by 1).</li>
+    <li><strong>Check SL/TP:</strong> If a position is open, check whether the current bar's high or low has touched the stop-loss or take-profit level. If so, record the exit and close the position.</li>
+    <li><strong>Check exit conditions:</strong> If no SL/TP exit occurred, check whether the signal has reversed or the max bars held has been reached. If so, close the position.</li>
+    <li><strong>Check entry conditions:</strong> If no position is currently open, check whether the current bar's signal meets the entry criteria (including confirmation bars). If so, open a new position.</li>
+    <li><strong>Record the bar's return</strong> for the open position (if any).</li>
+    <li><strong>Advance to the next bar.</strong></li>
+  </ol>
+
+  <p>The key variables tracked by the engine at each bar:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variable</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>position</code></td><td>Current position direction: +1 (long), &minus;1 (short), 0 (flat)</td></tr>
+      <tr><td><code>entry_price</code></td><td>Close price at which the current position was entered</td></tr>
+      <tr><td><code>entry_bar</code></td><td>Bar index at which the current position was entered</td></tr>
+      <tr><td><code>sl_price</code></td><td>Stop-loss price for the current position (None if SL disabled)</td></tr>
+      <tr><td><code>tp_price</code></td><td>Take-profit price for the current position (None if TP disabled)</td></tr>
+      <tr><td><code>equity</code></td><td>Running portfolio value, starting at 1.0 (normalised)</td></tr>
+      <tr><td><code>returns</code></td><td>Series of bar-by-bar returns for the open position</td></tr>
+      <tr><td><code>trade_log</code></td><td>List of completed trade records (dict per trade)</td></tr>
+      <tr><td><code>pending_entry</code></td><td>Flag for the pending entry mechanism (see Section 7.6)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SL/TP Hit Detection</h3>
+  <p>
+    The engine checks SL and TP using the bar's high and low rather than just the close. For a long position:
+  </p>
+  <ul>
+    <li>SL is hit if <code>Low[t] &le; sl_price</code> — the bar touched the stop level.</li>
+    <li>TP is hit if <code>High[t] &ge; tp_price</code> — the bar touched the take-profit level.</li>
+    <li>If <strong>both</strong> are hit on the same bar (a wide-range bar), the stop-loss takes precedence (conservative assumption).</li>
+  </ul>
+  <p>
+    For a short position, the logic is reversed: SL is hit if <code>High[t] &ge; sl_price</code>; TP is hit if <code>Low[t] &le; tp_price</code>.
+  </p>
+  <p>
+    Exit prices for SL/TP are recorded as the SL or TP price itself (not the close), which accurately models execution at the stop or limit level.
+  </p>
+
+  <!-- 7.2 VOLATILITY-BASED STOP-LOSS SIZING -->
+  <h2>7.2 &nbsp; Volatility-Based Stop-Loss Sizing</h2>
+
+  <h3>Motivation</h3>
+  <p>
+    A fixed-percentage stop-loss (e.g. always use a 2% stop) is suboptimal because it ignores the asset's current volatility. A 2% stop on a low-volatility asset might be rarely hit; the same 2% stop on a high-volatility cryptocurrency might be hit on almost every bar just from normal intraday noise.
+  </p>
+  <p>
+    The platform uses a <strong>volatility-based stop</strong>: the stop distance is set as a multiple of the asset's recent Average True Range (ATR). This ensures the stop is sized relative to how much the asset normally moves — wide enough to survive normal volatility, tight enough to limit losses on genuine reversals.
+  </p>
+
+  <h3>Calculation</h3>
+  <pre><code>ATR[t] = Average True Range over the last atr_period bars
+       = mean( max(High[i] - Low[i],
+                   |High[i] - Close[i-1]|,
+                   |Low[i]  - Close[i-1]|)
+               for i in [t-atr_period+1 : t+1] )
+
+Stop Distance = atr_multiplier * ATR[t]
+
+For a LONG entry at price P:
+    SL Price = P - Stop Distance
+    TP Price = P + Stop Distance * tp_ratio
+
+For a SHORT entry at price P:
+    SL Price = P + Stop Distance
+    TP Price = P - Stop Distance * tp_ratio</code></pre>
+
+  <p>The ATR period and multiplier are configurable. Interval-specific default bounds:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Interval</th>
+        <th>ATR Period</th>
+        <th>Multiplier Range</th>
+        <th>Default Multiplier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1d</td><td>14</td><td>0.5 – 5.0</td><td>2.0</td></tr>
+      <tr><td>4h</td><td>14</td><td>0.5 – 5.0</td><td>2.0</td></tr>
+      <tr><td>1h</td><td>14</td><td>0.5 – 5.0</td><td>2.0</td></tr>
+      <tr><td>15m</td><td>14</td><td>0.5 – 3.0</td><td>1.5</td></tr>
+      <tr><td>5m</td><td>14</td><td>0.5 – 3.0</td><td>1.5</td></tr>
+    </tbody>
+  </table>
+
+  <p>
+    The stop distance is calculated at the bar of entry and <strong>does not change</strong> during the trade's lifetime (unless trailing stop is enabled — see Section 4.5). Even if ATR changes after entry, the stop level remains fixed at the entry-bar ATR value.
+  </p>
+
+  <!-- 7.3 POSITION SIZING -->
+  <h2>7.3 &nbsp; Position Sizing</h2>
+
+  <p>Two position sizing modes are available:</p>
+
+  <h3>Mode 1: Fixed Risk Per Trade</h3>
+  <p>
+    Risk a fixed percentage of current equity on each trade. The position size is calculated so that if the stop-loss is hit, the portfolio loses exactly the specified percentage.
+  </p>
+  <pre><code>Risk Amount  = Equity * risk_per_trade_pct / 100
+Stop Distance = atr_multiplier * ATR[entry_bar]
+
+Position Size (units) = Risk Amount / Stop Distance</code></pre>
+  <p>
+    Example: equity = $10,000, risk = 1%, ATR-based stop = $5.00 per unit.
+    Position size = $100 / $5.00 = 20 units. If the stop is hit, the loss is exactly 20 &times; $5.00 = $100 = 1% of equity.
+  </p>
+  <p>
+    This mode requires SL to be enabled. If SL is disabled, the engine falls back to a fixed fraction of equity (equal-weighted) per trade.
+  </p>
+
+  <h3>Mode 2: Volatility Targeting</h3>
+  <p>
+    Size positions so that the portfolio's annualised volatility contribution from each trade equals the target. This ensures consistent portfolio-level risk regardless of the individual asset's volatility.
+  </p>
+  <pre><code>ann_vol[t]    = std(returns, vol_lookback) * sqrt(annualisation_factor)
+position_size = vol_target / ann_vol[t]</code></pre>
+  <p>
+    When an asset's volatility is high, smaller positions are taken; when low, larger positions. This is the standard approach used by CTA/systematic macro funds.
+  </p>
+
+  <!-- 7.4 TAKE-PROFIT CALCULATION -->
+  <h2>7.4 &nbsp; Take-Profit Calculation</h2>
+
+  <pre><code>For a LONG trade with entry price P and stop at SL:
+    Stop Distance = P - SL
+    TP Price      = P + Stop Distance * tp_ratio
+
+For a SHORT trade with entry price P and stop at SL:
+    Stop Distance = SL - P
+    TP Price      = P - Stop Distance * tp_ratio</code></pre>
+
+  <p>
+    <strong>Why 2:1?</strong> The default TP ratio of 2.0 means the take-profit is twice as far from entry as the stop-loss. This means the strategy needs only a 33.3% win rate to break even (ignoring commissions): a 2:1 reward-to-risk means two losses and one win nets zero. At a 40% win rate with 2:1 RR, the strategy is profitable even with more losing trades than winning ones.
+  </p>
+  <p>
+    Higher TP ratios (3:1, 4:1) increase the reward per winning trade but reduce win rate (the TP is further away, harder to reach). Lower TP ratios (1:1, 1.5:1) increase win rate but require a higher win rate to be profitable overall.
+  </p>
+
+  <!-- 7.5 COMMISSION & SLIPPAGE -->
+  <h2>7.5 &nbsp; Commission &amp; Slippage</h2>
+
+  <pre><code>Total Cost per Trade = (commission_pct / 100) + (slippage_pct / 100)
+
+Applied on ENTRY: entry_price_adj  = entry_price  * (1 + direction * total_cost)
+Applied on EXIT:  exit_price_adj   = exit_price   * (1 - direction * total_cost)
+
+Net Trade Return = (exit_price_adj - entry_price_adj) / entry_price_adj * direction</code></pre>
+
+  <p>
+    Both commission and slippage are expressed as percentages of the trade value and are applied symmetrically on entry and exit. The default values are <strong>0.1% commission</strong> and <strong>0.05% slippage</strong>, representing a realistic estimate for a liquid equity or ETF on a modern retail broker.
+  </p>
+  <p>
+    Commission and slippage are applied to every trade, both on entry and on exit. This means the round-trip cost is approximately 2 &times; (commission + slippage). For the default settings: round-trip cost &asymp; 0.3% per trade.
+  </p>
+  <p>
+    At high trade frequencies (many short-duration trades), commission and slippage can significantly erode returns. A strategy that appears profitable gross may be unprofitable net of costs. Always inspect the trade count alongside the net returns when evaluating a strategy.
+  </p>
+
+  <!-- 7.6 SIGNAL RE-ENTRY -->
+  <h2>7.6 &nbsp; Signal Re-Entry — The Pending Entry Mechanism</h2>
+
+  <p>
+    A subtle but important feature of the engine concerns what happens when a trade is closed mid-bar by a stop-loss or take-profit, and the signal for that same bar is still active.
+  </p>
+  <p>
+    <strong>The problem:</strong> Suppose a long trade is stopped out at mid-bar, but the signal at that bar is still +1 (long). Without special handling, the engine would immediately re-enter a new long position on the same bar — entering at the SL exit price and potentially entering again in the direction that just stopped you out.
+  </p>
+  <p>
+    <strong>The solution — pending entry:</strong> When a trade is closed by SL or TP, the engine sets a <code>pending_entry</code> flag. On the <em>next</em> bar, if the signal is still in the same direction as the pending entry, a new trade opens at that next bar's close price. This ensures:
+  </p>
+  <ul>
+    <li>No immediate re-entry on the same bar as the exit.</li>
+    <li>Re-entry is still possible on the next bar if the signal persists.</li>
+    <li>The engine does not miss persistent signals just because a single trade hit its stop.</li>
+  </ul>
+  <pre><code>if sl_hit or tp_hit:
+    close_current_trade(exit_reason='SL' or 'TP')
+    pending_entry = current_signal   # remember the signal direction
+
+# Next bar:
+if pending_entry != 0 and signal[next_bar] == pending_entry:
+    open_new_trade(direction=pending_entry)
+    pending_entry = 0</code></pre>
+  <p>
+    The pending entry mechanism prevents both double-trading on a single bar and signal-loss after a stop-out. It is active by default and cannot be disabled — it is a correctness feature of the simulation, not an optional strategy feature.
+  </p>
+</div>
+
+<!-- ==================== SECTION 8: PERFORMANCE METRICS ==================== -->
+<div class="section">
+  <h1>8 &nbsp; Performance Metrics</h1>
+  <hr>
+
+  <p>
+    The backtest engine computes the following metrics from the equity curve and trade log. All metrics are displayed in the Results tab and included in the downloadable CSV export.
+  </p>
+
+  <h3>Total Return (%)</h3>
+  <p>
+    The overall percentage gain or loss over the entire backtest period, measured from the equity curve.
+  </p>
+  <pre><code>Total Return = (Final Equity - Initial Equity) / Initial Equity * 100</code></pre>
+  <p>
+    This is the raw cumulative return. It does not account for time — a 50% return over 10 years is very different from 50% over 1 year. For time-adjusted comparisons, use Annualised Return.
+  </p>
+
+  <h3>Annualised Return (%)</h3>
+  <p>
+    The compound annual growth rate (CAGR) — what annual return would compound to produce the observed total return over the backtest period.
+  </p>
+  <pre><code>n_years = n_bars / annualisation_factor
+
+Annualised Return = ((1 + Total Return / 100) ^ (1 / n_years) - 1) * 100</code></pre>
+  <p>
+    The annualisation factor depends on the interval (252 for daily, 252×24/4 for 4h, etc.). This metric allows fair comparison between backtests of different lengths.
+  </p>
+
+  <h3>Max Drawdown (%)</h3>
+  <p>
+    The largest peak-to-trough decline in the equity curve over the entire backtest period.
+  </p>
+  <pre><code>Rolling Peak[t] = max(Equity[0 : t+1])
+Drawdown[t]     = (Equity[t] - Rolling Peak[t]) / Rolling Peak[t] * 100
+Max Drawdown    = min(Drawdown[t] for all t)</code></pre>
+  <p>
+    Max Drawdown is expressed as a negative percentage. It is the most commonly used risk metric in systematic trading. A strategy with a 40% annualised return but a 60% max drawdown may be psychologically impossible to trade — most investors would abandon it during the drawdown before it recovers.
+  </p>
+
+  <h3>Sharpe Ratio</h3>
+  <p>
+    The risk-adjusted return — annualised excess return divided by annualised volatility of returns. Measures return per unit of total risk.
+  </p>
+  <pre><code>Sharpe Ratio = (Annualised Return - Risk Free Rate) / (std(returns) * sqrt(ann_factor))
+
+Risk Free Rate = 0 (default, can be changed in settings)</code></pre>
+  <p>
+    The Sharpe Ratio is the most widely used performance metric in finance. A Sharpe above 1.0 is generally considered good; above 2.0 is excellent; above 3.0 is exceptional (and rare outside of very high-frequency strategies). Below 0 means the strategy underperforms the risk-free rate on a risk-adjusted basis.
+  </p>
+  <p>
+    <strong>Limitation:</strong> The Sharpe Ratio penalises all volatility equally — including upside volatility (large gains). A strategy with large positive outliers will be penalised. The Sortino Ratio addresses this.
+  </p>
+
+  <h3>Sortino Ratio</h3>
+  <p>
+    Like the Sharpe Ratio, but uses only the downside deviation (standard deviation of negative returns) rather than total standard deviation.
+  </p>
+  <pre><code>Downside Returns = returns where returns < 0
+Downside Std     = std(Downside Returns) * sqrt(ann_factor)
+
+Sortino Ratio = Annualised Return / Downside Std</code></pre>
+  <p>
+    The Sortino Ratio is more appropriate than Sharpe for strategies with asymmetric return distributions — such as trend-following strategies that have many small losses and occasional large wins. A Sortino Ratio greater than 1.5–2.0 indicates good risk-adjusted performance on the downside.
+  </p>
+
+  <h3>Calmar Ratio</h3>
+  <p>
+    The ratio of annualised return to maximum drawdown. Measures return per unit of worst-case drawdown risk.
+  </p>
+  <pre><code>Calmar Ratio = Annualised Return (%) / |Max Drawdown (%)|</code></pre>
+  <p>
+    A Calmar Ratio above 0.5 is considered acceptable; above 1.0 is good; above 2.0 is excellent. A strategy with a 20% annualised return and a 10% max drawdown has a Calmar of 2.0.
+  </p>
+
+  <h3>Win Rate (%)</h3>
+  <p>
+    The percentage of completed trades that resulted in a positive return (after commission and slippage).
+  </p>
+  <pre><code>Win Rate = (Number of Winning Trades / Total Completed Trades) * 100</code></pre>
+  <p>
+    Win rate alone is not a meaningful metric without the average win/loss ratio. A strategy with a 30% win rate can be highly profitable if the average win is 3&times; the average loss. Conversely, a strategy with a 70% win rate can be unprofitable if the losses are much larger than the wins.
+  </p>
+
+  <h3>Long Win Rate / Short Win Rate (%)</h3>
+  <p>
+    Win rate broken down separately for long trades and short trades. This reveals directional bias — whether the strategy performs better on one side of the market.
+  </p>
+  <pre><code>Long Win Rate  = Winning long trades  / Total long trades  * 100
+Short Win Rate = Winning short trades / Total short trades * 100</code></pre>
+  <p>
+    A strategy with a high long win rate but low short win rate may benefit from being restricted to long-only mode. These metrics are displayed in the metrics table and can guide parameter refinement.
+  </p>
+
+  <h3>Exposure (%)</h3>
+  <p>
+    The percentage of bars where the strategy held an active position (long or short). Measures how much of the available time was spent in the market.
+  </p>
+  <pre><code>Exposure = (Bars with non-zero position / Total bars) * 100</code></pre>
+  <p>
+    High exposure (close to 100%) means the strategy is almost always in the market — it never steps aside. Low exposure (e.g. 20–30%) means it trades selectively. For trend-following strategies, exposure often correlates with the holding period; for mean-reversion, it correlates with how often extreme readings occur.
+  </p>
+
+  <h3>Number of Trades</h3>
+  <p>
+    The total count of completed round-trip trades (entry + exit pairs) over the backtest period.
+  </p>
+  <p>
+    A low trade count (fewer than 30–50) makes all other statistics unreliable due to small sample size — a few lucky or unlucky trades can dominate the metrics. The Parameter Sweep section uses a minimum trade count filter (default 30) to exclude under-sampled parameter combinations from the heatmap.
+  </p>
+</div>
+
+<!-- ==================== SECTION 9: TRADE LOG COLUMNS ==================== -->
+<div class="section">
+  <h1>9 &nbsp; Trade Log Columns</h1>
+  <hr>
+
+  <p>
+    Every completed trade is recorded in the trade log, which can be viewed in the Trade Log tab and downloaded as a CSV. Each row represents one completed round-trip trade (from entry to exit).
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Column</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Entry Date</strong></td>
+        <td>The timestamp of the bar at which the trade was entered. This is the bar whose close price was used as the entry price.</td>
+      </tr>
+      <tr>
+        <td><strong>Exit Date</strong></td>
+        <td>The timestamp of the bar at which the trade was closed. For SL/TP exits, this is the bar that touched the level; for signal/fixed-bar exits, this is the bar the exit condition was met.</td>
+      </tr>
+      <tr>
+        <td><strong>Entry Price</strong></td>
+        <td>The close price of the entry bar (before commission and slippage adjustment). This is the price at which the position was theoretically opened.</td>
+      </tr>
+      <tr>
+        <td><strong>SL Price</strong></td>
+        <td>The stop-loss price set at entry. <em>NaN</em> if SL was not enabled for this trade. Calculated as <code>Entry Price ± atr_multiplier × ATR</code> depending on direction.</td>
+      </tr>
+      <tr>
+        <td><strong>TP Price</strong></td>
+        <td>The take-profit price set at entry. <em>NaN</em> if TP was not enabled. Calculated as <code>Entry Price ± Stop Distance × tp_ratio</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Exit Price</strong></td>
+        <td>The actual price at which the trade was closed. For SL exits, this is the SL price. For TP exits, this is the TP price. For signal/bar exits, this is the close price of the exit bar.</td>
+      </tr>
+      <tr>
+        <td><strong>Exit Reason</strong></td>
+        <td>One of: <code>SL</code> (stop-loss hit), <code>TP</code> (take-profit hit), <code>Signal</code> (signal reversed or turned neutral), <code>MaxBars</code> (maximum bars held reached), <code>EndOfData</code> (backtest period ended with trade open).</td>
+      </tr>
+      <tr>
+        <td><strong>Direction</strong></td>
+        <td><code>Long</code> or <code>Short</code>. The direction of the trade.</td>
+      </tr>
+      <tr>
+        <td><strong>Return (%)</strong></td>
+        <td>The net percentage return of the trade after commission and slippage. A positive value is a winning trade; negative is a losing trade.
+          <br><code>Return = (Exit Price<sub>adj</sub> - Entry Price<sub>adj</sub>) / Entry Price<sub>adj</sub> × direction × 100</code>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Bars Held</strong></td>
+        <td>The number of bars from entry to exit (inclusive of the entry bar). One bar on a daily chart = one trading day; one bar on a 1h chart = one hour.</td>
+      </tr>
+      <tr>
+        <td><strong>MAE (%)</strong></td>
+        <td>Maximum Adverse Excursion — the worst intra-trade loss as a percentage of entry price. Measures the deepest the trade went against you at any point during its lifetime. MAE is always a negative number (or zero if the trade never went against you).</td>
+      </tr>
+      <tr>
+        <td><strong>MFE (%)</strong></td>
+        <td>Maximum Favourable Excursion — the best intra-trade gain as a percentage of entry price. Measures the most the trade moved in your favour at any point during its lifetime. MFE is always a positive number (or zero if the trade never moved in your favour).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Using MAE and MFE Together</h2>
+  <p>
+    MAE and MFE are diagnostic tools for understanding trade behaviour beyond just the final outcome:
+  </p>
+  <ul>
+    <li>A trade with a large MFE but a small final Return indicates that the exit strategy is giving back too much profit — the trade went well but exited too late. A tighter TP or earlier signal exit might capture more of the MFE.</li>
+    <li>A trade with a small MAE that resulted in a loss (hit SL) indicates the stop was placed reasonably — the trade immediately went against the entry and the stop did its job.</li>
+    <li>A trade with a large MAE that survived and ultimately became a winner indicates the stop was wide enough to give the trade room, but raises the question of whether a tighter stop would have improved the risk-adjusted return.</li>
+    <li>Plotting MAE vs final Return across all trades reveals whether the stop-loss level is calibrated correctly: if most losing trades have MAE near their SL (small), the stops are being hit cleanly; if losing trades have large MAEs that exceed the SL, there may be a slippage or gapping issue.</li>
+  </ul>
+</div>
+
+<!-- ==================== SECTION 10: PARAMETER SWEEP ==================== -->
+<div class="section">
+  <h1>10 &nbsp; Parameter Sweep</h1>
+  <hr>
+
+  <p>
+    The Parameter Sweep (available in the Trend/Momentum and Mean Reversion builders) runs a grid search over two selected parameters simultaneously and visualises the results as an interactive heatmap. This allows systematic optimisation and stability testing without manual trial-and-error.
+  </p>
+
+  <h2>How It Works</h2>
+  <p>
+    You select two parameters to sweep (e.g. fast period and slow period for an SMA Crossover), define the range and step size for each, and click Run Sweep. The engine runs a full backtest for every combination of parameter values and records the chosen metric (e.g. Sharpe Ratio, Total Return) for each.
+  </p>
+  <p>
+    All other parameters remain fixed at their current values during the sweep. Only the two selected parameters vary.
+  </p>
+
+  <h2>The Linspace Grid</h2>
+  <p>
+    The parameter ranges are divided into evenly spaced values using numpy's linspace:
+  </p>
+  <pre><code>param_values = np.linspace(min_value, max_value, n_steps)
+
+# Example: fast period from 5 to 30, 6 steps
+# → [5, 10, 15, 20, 25, 30]</code></pre>
+  <p>
+    The number of steps controls the resolution of the sweep. More steps produce a finer grid but take proportionally longer to run. The total number of backtests is <code>n_steps_param1 × n_steps_param2</code>.
+  </p>
+
+  <h2>Minimum Trades Filter</h2>
+  <p>
+    Any parameter combination that produces fewer than the minimum trade count threshold (default 30) is excluded from the heatmap — its cell is shown as grey/NaN. This prevents the display of misleadingly high metrics from combinations that traded only 2–3 times.
+  </p>
+  <pre><code>if trade_count < min_trades:
+    metric_value = NaN  # greyed out on heatmap</code></pre>
+
+  <h2>The Heatmap</h2>
+  <p>
+    Results are displayed as an interactive Plotly heatmap with:
+  </p>
+  <ul>
+    <li>X-axis: values of the first selected parameter.</li>
+    <li>Y-axis: values of the second selected parameter.</li>
+    <li>Cell colour: value of the selected metric (e.g. Sharpe Ratio). Green = good, red = poor (for return/Sharpe metrics); inverted for drawdown.</li>
+    <li>Hover tooltip: exact metric value and trade count for each cell.</li>
+    <li>The current parameter values (from the main builder sliders) are highlighted with a marker on the heatmap, showing where the current settings fall within the explored space.</li>
+  </ul>
+
+  <h2>Limitations and Warnings</h2>
+  <ul>
+    <li><strong>In-sample optimisation bias:</strong> The parameter sweep is performed on the same data used for the backtest. Selecting the best-performing parameters from the sweep and reporting those results as the strategy's performance is in-sample overfitting. The swept results should be used for understanding the parameter sensitivity landscape, not for selecting a "best" parameter to then test on the same data.</li>
+    <li><strong>Parameter stability is more important than the peak:</strong> A cell with Sharpe=1.8 surrounded by cells with Sharpe=1.5–1.7 is more likely to be a robust combination than a cell with Sharpe=2.5 surrounded by cells with Sharpe=0.5. Look for smooth, stable regions on the heatmap rather than isolated peaks.</li>
+    <li><strong>Computation time:</strong> Large grids (e.g. 20×20 = 400 backtests) may take several seconds on intraday data with thousands of bars. Start with coarser grids (6×6 or 8×8) to identify the promising region, then refine.</li>
+    <li><strong>The sweep does not optimise all parameters simultaneously.</strong> Only two parameters vary at a time. The remaining parameters are held fixed, which means the optimal combination found by the sweep may not be globally optimal across all parameters.</li>
+  </ul>
+
+  <hr>
+  <div class="doc-footer">
+    End of Documentation &mdash; Trading Research Platform &mdash; All strategies are for research and educational purposes only. Past performance does not guarantee future results.
+  </div>
+</div>
+
+</div><!-- end .page -->
+</body>
+</html>
