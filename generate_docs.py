@@ -31,7 +31,8 @@ LIGHT_TEXT = HexColor("#e2e8f0")
 MID_TEXT   = HexColor("#cbd5e1")
 
 # ── Document setup ─────────────────────────────────────────────────────────────
-OUTPUT = "Trading_Platform_Documentation.pdf"
+import os
+OUTPUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "Trading_Platform_Documentation.pdf")
 
 doc = SimpleDocTemplate(
     OUTPUT,

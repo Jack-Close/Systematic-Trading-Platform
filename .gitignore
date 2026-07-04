@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.streamlit/secrets.toml
+.claude/
+.DS_Store
+Thumbs.db
+.ipynb_checkpoints/
+venv/
+.venv/
+env/

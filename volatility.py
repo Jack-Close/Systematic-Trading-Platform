@@ -31,10 +31,14 @@ _PERIODS_PER_YEAR = {
 def _periods_per_year(interval: str) -> float:
     return _PERIODS_PER_YEAR.get(interval, 252.0)
 
+_MODELS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models")
+
+
 def _vol_model_path(interval: str, ticker: str = "") -> str:
+    os.makedirs(_MODELS_DIR, exist_ok=True)
     safe = ticker.upper().replace("/", "-") if ticker else ""
     prefix = f"{safe}_" if safe else ""
-    return f"{prefix}vol_model_{interval}.joblib"
+    return os.path.join(_MODELS_DIR, f"{prefix}vol_model_{interval}.joblib")
 
 
 def build_vol_features(df: pd.DataFrame, horizon: int = 5, interval: str = "1d") -> Tuple[pd.DataFrame, pd.Series]:

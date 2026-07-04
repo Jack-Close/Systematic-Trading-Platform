@@ -29,8 +29,9 @@ import sys
 # ---------------------------------------------------------------------------
 
 BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
-HTML_FILE = os.path.join(BASE_DIR, "Trading_Platform_Documentation_v2.html")
-PDF_FILE  = os.path.join(BASE_DIR, "Trading_Platform_Documentation_v2.pdf")
+DOCS_DIR  = os.path.join(BASE_DIR, "docs")
+HTML_FILE = os.path.join(DOCS_DIR, "Trading_Platform_Documentation_v2.html")
+PDF_FILE  = os.path.join(DOCS_DIR, "Trading_Platform_Documentation_v2.pdf")
 
 # ---------------------------------------------------------------------------
 # Chrome executable locations to check (Windows)
@@ -135,7 +136,7 @@ def convert_with_weasyprint() -> bool:
 
     try:
         html_uri = f"file:///{HTML_FILE.replace(os.sep, '/')}"
-        doc = weasyprint.HTML(filename=HTML_FILE, base_url=BASE_DIR)
+        doc = weasyprint.HTML(filename=HTML_FILE, base_url=DOCS_DIR)
         doc.write_pdf(PDF_FILE)
 
         if os.path.isfile(PDF_FILE):
